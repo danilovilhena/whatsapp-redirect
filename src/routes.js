@@ -1,5 +1,4 @@
 const express = require('express')
-const slugify = require('slugify')
 const { Deta } = require('deta')
 const { generateId, keyExists, findGroupPosition } = require('./helper.js') 
 
@@ -7,20 +6,16 @@ const router = new express.Router()
 const deta = Deta('b0t6xspl_PfV5pfhncSNXq84EkMki2FtjUrXMH57R')
 const db = deta.Base('whatsapp')
 
-router.get('/', async (req, res) => { 
-    res.redirect('https://github.com/danilovilhena/whatsapp-redirect');
-})
-
-// Creates a new object in the database 
-router.post('/create', async (req, res) => {
+// Creates a new user in the database. Can accept a "key" parameter
+router.post('/:key', async (req, res) => {
     const obj = { key: generateId(), createdAt: new Date().toLocaleString(), count: 0, links: [], slug: false }
 
     // Check if generated key is used and if so generate another
     if(await keyExists(db, obj.key)) obj.key = generateId()
 
     // Check if a key was passed
-    if(req.query.key || req.body.key) {
-        obj.key = req.query.key || slugify(req.body.key)
+    if(req.params.key) {
+        obj.key = req.params.key
         obj.slug = true
     }
     
@@ -39,41 +34,8 @@ router.post('/create', async (req, res) => {
       .catch(err => res.status(400).send(err))
 })
 
-// Adds a link to the array by key
-router.post('/add', async (req, res) => {
-    const key = req.query.key || req.body.key
-    if(key){
-        const user = await db.get(key)
-        
-        if(user){
-            let link = req.query.link || req.body.link
-    
-            if(!link) return res.status(400).send('Group link was not passed.')
-            if(!link.includes('whatsapp')) link = "https://chat.whatsapp.com/" + link
-            if(user.links.includes(link)) return res.status(400).send('Group link is already included.')
-            
-            const updates = { "links": db.util.append(link) }
-    
-            await db.update(updates, key)
-              .then(() => { res.status(200).send('New link added successfully!') })
-              .catch(err => res.status(400).send(err))
-        } else res.status(404).send('User not found.')
-    } 
-    else res.status(404).send('Key was not passed.')
-})
-
-// Returns array of links by key
-router.get('/links', async (req, res) => {
-    const key = req.query.key || req.body.key
-    if(key){
-        const user = await db.get(key)
-        user ? res.status(200).send({links: user.links}) : res.status(404).send('User not found.')            
-    } 
-    else res.status(404).send('Key was not passed.')
-})
-
-// Redirects to current link
-router.get('/link/:key', async (req, res) => {
+// Redirects to current link by key
+router.get('/:key', async (req, res) => {
     const key = req.params.key
     const redirect = req.query.redirect || false
     const user = await db.get(key)
@@ -92,11 +54,34 @@ router.get('/link/:key', async (req, res) => {
     else res.status(404).send('User not found.')
 })
 
-module.exports = router
+// Adds a link to the array by key
+router.put('/:key/add', async (req, res) => {
+    const key = req.params.key
+    const user = await db.get(key)
+    
+    if(user){
+        let link = req.query.link || req.body.link
 
-/* Possible routes:
-/ -  redirect to README
-/create - create object in the database
-/add - add link inside that object
-/link - send the link back (check if it's possible to redirect)
-*/
+        if(!link) return res.status(400).send('Group link was not passed.')
+        if(!link.includes('whatsapp')) link = "https://chat.whatsapp.com/" + link
+        if(user.links.includes(link)) return res.status(400).send('Group link is already included.')
+        
+        const updates = { "links": db.util.append(link) }
+
+        await db.update(updates, key)
+            .then(() => { res.status(200).send('New link added successfully!') })
+            .catch(err => res.status(400).send(err))
+    } else res.status(404).send('User not found.')
+})
+
+// Returns user information by key
+router.get('/:key/info', async (req, res) => {
+    const key = req.params.key
+    if(key){
+        const user = await db.get(key)
+        user ? res.status(200).send({...user}) : res.status(404).send('User not found.')            
+    } 
+    else res.status(404).send('Key was not passed.')
+})
+
+module.exports = router
