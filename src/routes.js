@@ -46,20 +46,24 @@ router.post('/create', async (req, res) => {
 // BODY case: { key: "something", link: "https://chat.whatsapp.com/E7XVpkrLPBy2O1PFB5rRr9" }
 router.post('/add', async (req, res) => {
     const key = req.query.key || req.body.key
-    if(key && await db.get(key)){
-        let link = req.query.link || req.body.link
-
-        // TODO: Check if link is already present in the array
-        if(!link) res.status(400).send('Group link was not passed.')
-        if(!link.includes('whatsapp')) link = "https://chat.whatsapp.com/" + link
+    if(key){
+        const user = await db.get(key)
         
-        const updates = { "groups": db.util.append(link) }
-
-        await db.update(updates, key)
-          .then(() => { res.status(200).send('New link added successfully!') })
-          .catch(err => res.status(400).send(err))
+        if(user){
+            let link = req.query.link || req.body.link
+    
+            if(!link) res.status(400).send('Group link was not passed.')
+            if(!link.includes('whatsapp')) link = "https://chat.whatsapp.com/" + link
+            if(user.groups.includes(link)) res.status(400).send('Group link is already included.')
+            
+            const updates = { "groups": db.util.append(link) }
+    
+            await db.update(updates, key)
+              .then(() => { res.status(200).send('New link added successfully!') })
+              .catch(err => res.status(400).send(err))
+        } else res.status(404).send('User not found.')
     } 
-    else res.status(404).send('User not found.')
+    else res.status(404).send('Key was not passed.')
 })
 
 module.exports = router
