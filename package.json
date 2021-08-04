@@ -1,0 +1,20 @@
+{
+  "name": "whatsapp-redirect",
+  "version": "1.0.0",
+  "description": "API made to organize and redirect users to WhatsApp groups during a a digital product launch.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilovilhena/whatsapp-redirect.git"
+  },
+  "keywords": ["whatsapp", "groups", "api", "nodejs", "digital product", "product launch"],
+  "author": "Danilo Vilhena",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danilovilhena/whatsapp-redirect/issues"
+  },
+  "homepage": "https://github.com/danilovilhena/whatsapp-redirect#readme"
+}
