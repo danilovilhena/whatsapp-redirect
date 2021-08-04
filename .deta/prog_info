@@ -1,0 +1,1 @@
+{"id":"0f8cdaef-22b1-441b-8d4a-75e2de13214f","space":8365,"runtime":"nodejs12.x","name":"whatsapp-redirect","path":"l7580k","project":"b0t6xspl","account":"144798365827","region":"sa-east-1","deps":["express@^4.17.1"],"envs":null,"public":true,"log_level":"debug","cron":""}
