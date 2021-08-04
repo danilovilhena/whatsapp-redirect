@@ -75,6 +75,7 @@ router.get('/links', async (req, res) => {
 // Redirects to current link
 router.get('/link/:key', async (req, res) => {
     const key = req.params.key
+    const redirect = req.query.redirect || false
     const user = await db.get(key)
 
     if(user){
@@ -84,7 +85,9 @@ router.get('/link/:key', async (req, res) => {
 
         let index = findGroupPosition(user.count + 1)
         let link = user.links[index]
-        res.redirect(link)
+
+        redirect ? res.redirect(link) : res.status(200).send({ link })
+        
     }
     else res.status(404).send('User not found.')
 })
