@@ -22,7 +22,7 @@ router.post('/create', async (req, res) => {
 
     // Check if a key was passed
     if(req.query.key || req.body.key) {
-        obj.key = req.query.key || req.body.key
+        obj.key = req.query.key || slugify(req.body.key)
         obj.slug = true
     }
     
@@ -49,6 +49,7 @@ router.post('/add', async (req, res) => {
     if(key && await db.get(key)){
         let link = req.query.link || req.body.link
 
+        // TODO: Check if link is already present in the array
         if(!link) res.status(400).send('Group link was not passed.')
         if(!link.includes('whatsapp')) link = "https://chat.whatsapp.com/" + link
         
