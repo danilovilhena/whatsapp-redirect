@@ -5,6 +5,13 @@ const keyExists = async (db, key) => {
     return user ? true : false
 }
 
+const findGroupPosition = (count) => {
+    let max = 255
+    let position = -1;
+    while (count >= 0){ count -= max; position++ }
+    return position
+}
+
 module.exports = {
-    generateId, keyExists
+    generateId, keyExists, findGroupPosition
 }
