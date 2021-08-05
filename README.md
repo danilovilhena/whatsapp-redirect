@@ -7,18 +7,18 @@ When launching a digital product, sending potential buyers to a WhatsApp group i
 That said, this API was designed to automatically store WhatsApp group links and redirect your potential clients to the latest group that isn't full.
 
 ## 🔢 How to use?
-1. If you'd like to use a custom key, create a alphanumeric one. For this example, I'll use this custom key: danilo-key
+1. If you'd like to use a custom key, create a alphanumeric one. For this example, a custom key could be: danilo-key
 
-1. Make a POST request to https://whatsapp.deta.dev/danilo-key to create a user. If you don't pass a custom key, we'll generate one and return it to you.
+1. Make a POST request to https://whatsapp.deta.dev/{your-key} to create a user. If you don't pass a custom key, we'll generate one and return it to you.
 
-1. Include groups links making a POST request to https://whatsapp.deta.dev/danilo-key/add and add the URL in the request's body as the code below or add the ending of the WhatsApp link (in this example: E7XVpkrLPBrRr9krLPB) as a query parameter to the POST request, like `https://whatsapp.deta.dev/danilo-key/add?link=E7XVpkrLPBrRr9krLPB`:
+1. Include groups links making a POST request to https://whatsapp.deta.dev/{your-key}/add and add the URL in the request's body as the code below or add the ending of the WhatsApp link (in this example: E7XVpkrLPBrRr9krLPB) as a query parameter to the POST request, like `https://whatsapp.deta.dev/danilo-key/add?link=E7XVpkrLPBrRr9krLPB`:
 ```js
 {
   link: "https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
 }
 ```
 
-4. Make a GET request to https://whatsapp.deta.dev/danilo-key to retrieve the current group URL. If you add the redirect parameter as true, the link you automatically redirect. Otherwise, it will return a object with the link.
+4. Make a GET request to https://whatsapp.deta.dev/{your-key} to retrieve the current group URL. If you add the redirect parameter as true, the link you automatically redirect. Otherwise, it will return a object with the link.
 
 ## 💡 Useful tips
 1. You don't have to create a custom key, but remember the generated one to use in the other endpoints.
