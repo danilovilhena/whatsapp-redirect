@@ -1,5 +1,8 @@
 # Whatsapp Redirect
-A Node.js API made to organize and redirect users to WhatsApp groups during a digital product launch.
+A Node.js API made to organize and redirect users to WhatsApp groups during a digital product launch.    
+<br>
+**Current URL:** https://whatsapp.deta.dev/  
+**Web application:** _to be published_
 
 ## 🧐 Motivation
 When launching a digital product, sending potential buyers to a WhatsApp group is a really popular strategy. However, when the number of people interested increases, it becomes really laborious to frequently change the link that redirects leads to the group whenever the group is filled. 
