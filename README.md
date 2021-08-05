@@ -11,3 +11,9 @@ That said, this API was designed to automatically store WhatsApp group links and
 - Node.js 
 - <a href="https://expressjs.com">Express</a> 
 - <a href="https://www.deta.sh">Deta</a> (Cloud service to deploy applications and databases)
+
+## 👋 Contact
+If you want to contact me you can reach me at danilo.vilhena@gmail.com
+
+## 📙 License
+This project uses the following license: <a href="https://github.com/danilovilhena/whatsapp-redirect/blob/main/LICENSE">MIT</a>.
