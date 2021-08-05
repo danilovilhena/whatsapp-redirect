@@ -32,7 +32,7 @@ router.post(['/', '/:key'], async (req, res) => {
                 key: obj.key
             })
         )
-        .catch(error => res.status(400).send(error))
+        .catch(error => res.status(400).send({error}))
 })
 
 // Adds a link to the array by key
@@ -64,7 +64,7 @@ router.get('/:key', async (req, res) => {
     if(user){
         await db.update({'count': db.util.increment(1)}, key)
             .then(() => {})
-            .catch(err => res.status(400).send(err))
+            .catch(error => res.status(400).send({error}))
 
         let index = findGroupPosition(user.count + 1)
         let link = user.links[index]
