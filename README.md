@@ -6,8 +6,6 @@ When launching a digital product, sending potential buyers to a WhatsApp group i
 
 That said, this API was designed to automatically store WhatsApp group links and redirect your potential clients to the latest group that isn't full.
 
-## Guide
-
 ## 🤖 API Routes
 You can access this API in the following url: https://whatsapp.deta.dev. Here are the endpoints that are currently up:
 
@@ -35,7 +33,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 }
 ```
 
-### `POST /:key/add?link=E7XVpkrLPBrRr9krLPB`  
+### `POST /:key/add?link=`  
 **Adds a new group link to the user's list**  
 - **key:** Key generated in the first endpoint described.
 - **link:** Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB
