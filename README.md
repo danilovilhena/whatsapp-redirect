@@ -11,7 +11,7 @@ That said, this API was designed to automatically store WhatsApp group links and
 
 1. Make a POST request to https://whatsapp.deta.dev/{your-key} to create a user. If you don't pass a custom key, we'll generate one and return it to you.
 
-1. Include groups links making a POST request to https://whatsapp.deta.dev/{your-key}/add and add the URL in the request's body as the code below or add the ending of the WhatsApp link (in this example: E7XVpkrLPBrRr9krLPB) as a query parameter to the POST request, like `https://whatsapp.deta.dev/danilo-key/add?link=E7XVpkrLPBrRr9krLPB`:
+1. Include groups links making a POST request to https://whatsapp.deta.dev/{your-key}/add and add the URL in the request's body as the code below or add the ending of the WhatsApp link (in this example: E7XVpkrLPBrRr9krLPB) as a query parameter to the POST request, like `https://whatsapp.deta.dev/{your-key}/add?link=E7XVpkrLPBrRr9krLPB`:
 ```js
 {
   link: "https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
