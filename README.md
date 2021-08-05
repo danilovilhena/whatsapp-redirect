@@ -43,7 +43,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 }
 ```
 
-### `GET /:key?redirect=true`  
+### `GET /:key?redirect=`  
 **Returns the link or redirects to the current group**  
 - **key:** Key generated in the first endpoint described.
 - **redirect:** Boolean. If true, automatically redirects to the group. Otherwise, returns a JSON object with the link. If omitted, the assumed value is false.
@@ -58,7 +58,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ### `POST /:key/add?link=`  
 **Adds a new group link to the user's list**  
 - **key:** Key generated in the first endpoint described.
-- **link:** Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB
+- **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB
 **Response:**  
 ```js
 {
