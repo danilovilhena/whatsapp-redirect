@@ -12,6 +12,11 @@ const findGroupPosition = (count) => {
     return position
 }
 
+const sanitizeLink = (link) => {
+    let base = "https://chat.whatsapp.com/"
+    return link.includes('whatsapp') ? base + link.split('/').splice(-1)[0] : base + link
+}
+
 module.exports = {
-    generateId, keyExists, findGroupPosition
+    generateId, keyExists, findGroupPosition, sanitizeLink
 }
