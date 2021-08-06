@@ -65,6 +65,8 @@ router.get('/:key', async (req, res) => {
         await db.update({'count': db.util.increment(1)}, key)
             .then(() => {})
             .catch(error => res.status(400).send({error}))
+            
+        if(user.links.length == 0) return res.status(400).send({error: "There aren't any links added to this user."}) 
 
         let index = findGroupPosition(user.count + 1)
         let link = user.links[index]
