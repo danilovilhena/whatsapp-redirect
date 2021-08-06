@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/danilovilhena/whatsapp-redirect#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "deta": "^1.0.0",
     "express": "^4.17.1"
   },
