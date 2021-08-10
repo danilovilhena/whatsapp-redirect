@@ -66,7 +66,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ```
 
 ### `POST /:key/add?link=`  
-**Adds a new group link to the user's list**  
+**Adds a new group link to the user**  
 - **key:** Key generated in the first endpoint described.
 - **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
 
@@ -78,7 +78,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ```
 
 ### `DELETE /:key/remove?link=`  
-**Removes group link from user's list**  
+**Removes group link from user**  
 - **key:** Key generated in the first endpoint described.  
 - **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
 
@@ -86,6 +86,17 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ```js
 {
     "message": "Link removed successfully! This was the removed link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
+}
+```
+
+### `DELETE /:key/removeall`  
+**Removes all group links from user**  
+- **key:** Key generated in the first endpoint described.   
+
+**Response:**  
+```js
+{
+    "message": "All links removed successfully!"
 }
 ```
 
