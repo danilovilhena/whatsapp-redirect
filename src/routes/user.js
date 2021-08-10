@@ -1,6 +1,6 @@
 const express = require('express')
 const { Deta } = require('deta')
-const { generateId, keyExists } = require('./helper.js') 
+const { generateId, keyExists } = require('../helper.js') 
 
 const router = new express.Router()
 const deta = Deta('b0t6xspl_PfV5pfhncSNXq84EkMki2FtjUrXMH57R')
@@ -38,12 +38,27 @@ router.post(['/', '/:key'], async (req, res) => {
 // READ - Get user information
 router.get('/:key/info', async (req, res) => {
     const key = req.params.key
+    
     if(key){
         const user = await db.get(key)
         if(user){
             delete user.slug
             return res.status(200).send({...user})           
         } else res.status(404).send({error: 'User not found.'})
+    } 
+    else res.status(404).send({error: 'Key was not passed.'})
+})
+
+// DELETE - Delete user
+router.delete('/:key', async (req, res) => {
+    const key = req.params.key
+    
+    if(key){
+        db.delete(key)
+            .then(() => 
+                res.status(200).send({ message: (`Farewell! The user ${key} has been successfully deleted.`)})
+            )
+            .catch(error => res.status(400).send({error}))
     } 
     else res.status(404).send({error: 'Key was not passed.'})
 })
