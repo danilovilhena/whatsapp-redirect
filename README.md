@@ -12,44 +12,32 @@ That said, this API was designed to automatically store WhatsApp group links and
 ## 🤖 API Routes
 You can access this API in the following url: https://whatsapp.deta.dev. Here are the endpoints that are currently up:
 
+### User-related
 ### `POST /:key`  
-**Creates a new user in the database**  
+**Create new user in the database**  
 - **key:** Optional. If passed, uses its value as key. Otherwise, generates a random 6-digit key.  
   
 **Response:**  
 ```js
 {
-  message: "Done! Here is your key: v8v7gm",
-  key: "v8v7gm"
+    "message": "Done! Here is your key: v8v7gm",
+    "key": "v8v7gm"
 }
 ```
 
-### `GET /:key?redirect=`  
-**Returns the link or redirects to the current group**  
-- **key:** Key generated in the first endpoint described.
-- **redirect:** Boolean. If true, automatically redirects to the group. Otherwise, returns a JSON object with the link. If omitted, the assumed value is false.  
+### `DELETE /:key`  
+**Delete user from the database**  
+- **key:** Key generated in the first endpoint described.  
 
 **Response:**  
 ```js
 {
-  link: "https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
-}
-```
-
-### `POST /:key/add?link=`  
-**Adds a new group link to the user's list**  
-- **key:** Key generated in the first endpoint described.
-- **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
-
-**Response:**  
-```js
-{
-  message: "New link added successfully!"
+    "message": "Farewell! The user v8v7gm has been successfully deleted."
 }
 ```
 
 ### `GET /:key/info`  
-**Returns user information**  
+**Get user information**  
 - **key:** Key generated in the first endpoint described.  
 
 **Response:**  
@@ -61,6 +49,43 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
     "links": [
         "https://chat.whatsapp.com/GNJvHQjovSwAkzPypQZvWQ"
     ]
+}
+```
+
+### Link-related
+### `GET /:key?redirect=`  
+**Returns the link or redirects to the current group**  
+- **key:** Key generated in the first endpoint described.
+- **redirect:** Boolean. If true, automatically redirects to the group. Otherwise, returns a JSON object with the link. If omitted, the assumed value is false.  
+
+**Response:**  
+```js
+{
+    "link": "https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
+}
+```
+
+### `POST /:key/add?link=`  
+**Adds a new group link to the user's list**  
+- **key:** Key generated in the first endpoint described.
+- **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
+
+**Response:**  
+```js
+{
+    "message": "New link added successfully! This was the added link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
+}
+```
+
+### `DELETE /:key/remove?link=`  
+**Removes group link from user's list**  
+- **key:** Key generated in the first endpoint described.  
+- **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
+
+**Response:**  
+```js
+{
+    "message": "Link removed successfully! This was the removed link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
 }
 ```
 
