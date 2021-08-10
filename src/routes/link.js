@@ -27,7 +27,7 @@ router.get('/:key', async (req, res) => {
     else res.status(404).send({error: 'User not found.'})
 })
 
-// UPDATE - Append link to user's array
+// UPDATE - Append link to user
 router.post('/:key/add', async (req, res) => {
     const key = req.params.key
     const user = await db.get(key)
@@ -47,7 +47,7 @@ router.post('/:key/add', async (req, res) => {
     } else res.status(404).send({error: 'User not found.'})
 })
 
-// DELETE - Delete link from user's array
+// DELETE - Delete link from user
 router.delete('/:key/remove', async (req, res) => {
     const key = req.params.key
     const user = await db.get(key)
@@ -65,7 +65,20 @@ router.delete('/:key/remove', async (req, res) => {
                 .catch(error => res.status(400).send({error}))
         } 
         else return res.status(400).send({error: 'Group link is not included.'})
-    }
+    } else res.status(404).send({error: 'User not found.'})
+})
+
+// DELETE - Delete all links from user
+router.delete('/:key/removeall', async (req, res) => {
+    const key = req.params.key
+    const user = await db.get(key)
+
+    if(user){
+        const updates = { 'links': [] }
+        await db.update(updates, key)
+            .then(() => res.status(200).send({message: 'All links removed successfully!'}))
+            .catch(error => res.status(400).send({error}))
+    } else res.status(404).send({error: 'User not found.'})
 })
 
 module.exports = router
