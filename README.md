@@ -2,7 +2,7 @@
 A Node.js API made to organize and redirect users to WhatsApp groups during a digital product launch.    
 <br>
 **Base URL:** https://whatsapp.deta.dev/  
-**Web app:** https://bit.ly/wpp-redirect
+**Web app:** <a href="https://bit.ly/wpp-redirect">bit.ly/wpp-redirect</a>
 
 ## 🧐 Motivation
 When launching a digital product, sending potential buyers to a WhatsApp group is a really popular strategy. However, when the number of people interested increases, it becomes really laborious to frequently change the link that redirects leads to the group whenever the group is filled. 
