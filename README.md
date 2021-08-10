@@ -2,7 +2,7 @@
 A Node.js API made to organize and redirect users to WhatsApp groups during a digital product launch.    
 <br>
 **Base URL:** https://whatsapp.deta.dev/  
-**Web app:** _to be published_
+**Web app:** https://bit.ly/wpp-redirect
 
 ## 🧐 Motivation
 When launching a digital product, sending potential buyers to a WhatsApp group is a really popular strategy. However, when the number of people interested increases, it becomes really laborious to frequently change the link that redirects leads to the group whenever the group is filled. 
@@ -27,7 +27,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ### `GET /:key?redirect=`  
 **Returns the link or redirects to the current group**  
 - **key:** Key generated in the first endpoint described.
-- **redirect:** Boolean. If true, automatically redirects to the group. Otherwise, returns a JSON object with the link. If omitted, the assumed value is false.
+- **redirect:** Boolean. If true, automatically redirects to the group. Otherwise, returns a JSON object with the link. If omitted, the assumed value is false.  
 
 **Response:**  
 ```js
@@ -39,7 +39,8 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ### `POST /:key/add?link=`  
 **Adds a new group link to the user's list**  
 - **key:** Key generated in the first endpoint described.
-- **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB
+- **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
+
 **Response:**  
 ```js
 {
@@ -49,7 +50,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 
 ### `GET /:key/info`  
 **Returns user information**  
-- **key:** Key generated in the first endpoint described.
+- **key:** Key generated in the first endpoint described.  
 
 **Response:**  
 ```js
