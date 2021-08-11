@@ -8,28 +8,32 @@ const db = deta.Base('whatsapp')
 
 // CREATE - Create new user
 router.post(['/', '/:key'], async (req, res) => {
-    const obj = { key: generateId(), createdAt: new Date(), count: 0, links: [], slug: false }
+    const user = { key: generateId(), createdAt: new Date(), count: 0, links: [], slug: false }
 
     // Check if generated key is used and if so generate another
-    if(await keyExists(db, obj.key)) obj.key = generateId()
+    if(await keyExists(db, user.key)) user.key = generateId()
 
     // Check if a key was passed
     if(req.params.key) {
-        obj.key = req.params.key
-        obj.slug = true
+        user.key = req.params.key
+        user.slug = true
     }
+
+    // Check if a limit per link was passed
+    let limit = req.query.limit || req.body.limit
+    if(limit) user.limit = limit
     
     // Check if key is already used
-    if(obj.slug && await keyExists(db, obj.key)){
+    if(user.slug && await keyExists(db, user.key)){
         return res.status(400).send({error: 'Ops! The key you passed is already in use.'})
     }
     
-    // Put the object in the database
-    db.put(obj)
+    // Put the user in the database
+    db.put(user)
         .then(() => 
             res.status(200).send({
-                message: (obj.slug ? `Done! The key you passed is available. Just to remind you, here it is: ${obj.key}` : `Done! Here is your key: ${obj.key}`),
-                key: obj.key
+                message: (user.slug ? `Done! The key you passed is available. Just to remind you, here it is: ${user.key}` : `Done! Here is your key: ${user.key}`),
+                key: user.key
             })
         )
         .catch(error => res.status(400).send({error}))

@@ -13,9 +13,10 @@ That said, this API was designed to automatically store WhatsApp group links and
 You can access this API in the following url: https://whatsapp.deta.dev. Here are the endpoints that are currently up:
 
 ### User-related
-### `POST /:key`  
+### `POST /:key&limit=`  
 **Create new user in the database**  
 - **key:** Optional. If passed, uses its value as key. Otherwise, generates a random 6-digit key.  
+- **limit:** Number of clicks for each link. If omitted, the value used is 255.    
   
 **Response:**  
 ```js
