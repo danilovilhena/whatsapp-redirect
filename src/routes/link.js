@@ -38,8 +38,10 @@ router.post('/:key/add', async (req, res) => {
         if(!link) return res.status(400).send({error: 'Group link was not passed.'})
         link = sanitizeLink(link)
         if(user.links.includes(link)) return res.status(400).send({error: 'Group link is already included.'})
+
+        let linkObj = { id: user.links.length, link, count: 0, full: false, additional: 0 }
         
-        const updates = { 'links': db.util.append(link) }
+        const updates = { 'links': db.util.append(linkObj) }
 
         await db.update(updates, key)
             .then(() => res.status(200).send({message: `New link added successfully! This was the added link: ${link}`}))
@@ -58,7 +60,7 @@ router.delete('/:key/remove', async (req, res) => {
         link = sanitizeLink(link)
 
         if(user.links.includes(link)){
-            const updates = { 'links': user.links.filter((el) => el != link) }
+            const updates = { 'links': user.links.filter((el) => el.link != link) }
 
             await db.update(updates, key)
                 .then(() => res.status(200).send({message: `Link removed successfully! This was the removed link: ${link}`}))
@@ -82,3 +84,7 @@ router.delete('/:key/removeall', async (req, res) => {
 })
 
 module.exports = router
+
+// TODO:
+// - change group's full state to true
+// - update current group link route (watch additional and full)
