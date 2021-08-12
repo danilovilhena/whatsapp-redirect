@@ -66,7 +66,7 @@ router.post('/:key/full', async (req, res) => {
             const updates = { 'links': user.links }
 
             await db.update(updates, key)
-                .then(() => res.status(200).send({message: `Link removed successfully! This was the removed link: ${link}`}))
+                .then(() => res.status(200).send({message: `Link ${link} updated to full!`}))
                 .catch(error => res.status(400).send({error}))
         } 
         else return res.status(400).send({error: 'Group link is not included.'})
