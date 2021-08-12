@@ -73,6 +73,33 @@ router.post('/:key/full', async (req, res) => {
     } else res.status(404).send({error: 'User not found.'})
 })
 
+// UPDATE - Add additional clicks to link
+router.post('/:key/additional', async (req, res) => {
+    const key = req.params.key
+    const user = await db.get(key)
+
+    if(user){
+        let link = req.query.link || req.body.link
+        if(!link) return res.status(400).send({error: 'Group link was not passed.'})
+        link = sanitizeLink(link)
+
+        if(user.links.includes(link)){
+            const amount = req.query.amount || req.body.amount
+            if(!amount) return res.status(400).send({error: 'Additional amount was not passed.'})
+
+            let index = user.links.findIndex((el) => el.link == link)
+            user.links[index].amount += +amount
+
+            const updates = { 'links': user.links }
+
+            await db.update(updates, key)
+                .then(() => res.status(200).send({message: `Added ${amount} additional clicks to the link: ${link}.`}))
+                .catch(error => res.status(400).send({error}))
+        } 
+        else return res.status(400).send({error: 'Group link is not included.'})
+    } else res.status(404).send({error: 'User not found.'})
+})
+
 // DELETE - Delete link from user
 router.delete('/:key/remove', async (req, res) => {
     const key = req.params.key
