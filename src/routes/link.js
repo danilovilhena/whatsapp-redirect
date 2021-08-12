@@ -1,10 +1,13 @@
 const express = require('express')
 const { Deta } = require('deta')
-const { findGroupPosition, sanitizeLink } = require('../helper.js') 
+const { sanitizeLink } = require('../helper.js') 
 
 const router = new express.Router()
 const deta = Deta('b0t6xspl_PfV5pfhncSNXq84EkMki2FtjUrXMH57R')
 const db = deta.Base('whatsapp')
+
+
+// TODO: Test these routes thoroughly
 
 // READ - Get/redirect to current link
 router.get('/:key', async (req, res) => {
@@ -13,16 +16,30 @@ router.get('/:key', async (req, res) => {
     const user = await db.get(key)
 
     if(user){
+        // Increase user count
         await db.update({'count': db.util.increment(1)}, key)
             .then(() => {})
             .catch(error => res.status(400).send({error}))
             
         if(user.links.length == 0) return res.status(400).send({error: "There aren't any links added to this user."}) 
 
-        let index = findGroupPosition(user.count + 1)
-        let link = user.links[index]
+        // Find first link not full
+        let currentLink = user.links.find(el => !el.full)
 
-        return redirect ? res.redirect(link) : res.status(200).send({ link })
+        // Increment link counter
+        currentLink.count += 1
+        
+        // Check if link counter passed limit after increment, if so change it to full
+        if(currentLink.count >= (user.limit || 255) + (currentLink.additional || 0)) currentLink.full = true
+
+        // Update the database
+        user.links[user.links.indexOf(currentLink)] = currentLink
+        await db.update({'links': user.links}, key)
+            .then(() => {})
+            .catch(error => res.status(400).send({error}))
+
+        // Redirect or send link inside JSON
+        return redirect ? res.redirect(currentLink.link) : res.status(200).send({ link: currentLink.link })
     }
     else res.status(404).send({error: 'User not found.'})
 })
