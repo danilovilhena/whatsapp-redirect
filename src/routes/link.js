@@ -6,9 +6,6 @@ const router = new express.Router()
 const deta = Deta('b0t6xspl_PfV5pfhncSNXq84EkMki2FtjUrXMH57R')
 const db = deta.Base('whatsapp')
 
-
-// TODO: Test these routes thoroughly
-
 // READ - Get/redirect to current link
 router.get('/:key', async (req, res) => {
     const key = req.params.key
@@ -44,7 +41,7 @@ router.get('/:key', async (req, res) => {
     else res.status(404).send({error: 'User not found.'})
 })
 
-// UPDATE - Append link to user
+// UPDATE - Add link to user
 router.post('/:key/add', async (req, res) => {
     const key = req.params.key
     const user = await db.get(key)
@@ -54,7 +51,7 @@ router.post('/:key/add', async (req, res) => {
 
         if(!link) return res.status(400).send({error: 'Group link was not passed.'})
         link = sanitizeLink(link)
-        if(user.links.includes(link)) return res.status(400).send({error: 'Group link is already included.'})
+        if(user.links.some(el => el.link === link)) return res.status(400).send({error: 'Group link is already included.'})
 
         let linkObj = { id: user.links.length, link, count: 0, full: false, additional: 0 }
         
@@ -76,7 +73,7 @@ router.post('/:key/full', async (req, res) => {
         if(!link) return res.status(400).send({error: 'Group link was not passed.'})
         link = sanitizeLink(link)
 
-        if(user.links.includes(link)){
+        if(user.links.some(el => el.link === link)){
             let index = user.links.findIndex((el) => el.link == link)
             user.links[index].full = true
 
@@ -100,7 +97,7 @@ router.post('/:key/additional', async (req, res) => {
         if(!link) return res.status(400).send({error: 'Group link was not passed.'})
         link = sanitizeLink(link)
 
-        if(user.links.includes(link)){
+        if(user.links.some(el => el.link === link)){
             const amount = req.query.amount || req.body.amount
             if(!amount) return res.status(400).send({error: 'Additional amount was not passed.'})
 
@@ -127,7 +124,7 @@ router.delete('/:key/remove', async (req, res) => {
         if(!link) return res.status(400).send({error: 'Group link was not passed.'})
         link = sanitizeLink(link)
 
-        if(user.links.includes(link)){
+        if(user.links.some(el => el.link === link)){
             const updates = { 'links': user.links.filter((el) => el.link != link) }
 
             await db.update(updates, key)
