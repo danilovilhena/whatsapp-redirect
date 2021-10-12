@@ -13,9 +13,9 @@ That said, this API was designed to automatically store WhatsApp group links and
 You can access this API in the following url: https://whatsapp.deta.dev. Here are the endpoints that are currently up:
 
 ### User-related
-### `POST /:key&limit=`  
+### `POST /:key?limit=`  
 **Create new user in the database**  
-- **key:** Optional. If passed, uses its value as key. Otherwise, generates a random 6-digit key.  
+- **:key** Optional. If passed, uses its value as key. Otherwise, generates a random 6-digit key.  
 - **limit:** Number of clicks for each link. If omitted, the value used is 255.    
   
 **Response:**  
@@ -28,7 +28,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 
 ### `DELETE /:key`  
 **Delete user from the database**  
-- **key:** Key generated in the first endpoint described.  
+- **:key** Key generated in the first endpoint described.  
 
 **Response:**  
 ```js
@@ -39,7 +39,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 
 ### `GET /:key/info`  
 **Get user information**  
-- **key:** Key generated in the first endpoint described.  
+- **:key** Key generated in the first endpoint described.  
 
 **Response:**  
 ```js
@@ -56,7 +56,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 ### Link-related
 ### `GET /:key?redirect=`  
 **Returns the link or redirects to the current group**  
-- **key:** Key generated in the first endpoint described.
+- **:key** Key generated in the first endpoint described.
 - **redirect:** Boolean. If true, automatically redirects to the group. Otherwise, returns a JSON object with the link. If omitted, the assumed value is false.  
 
 **Response:**  
@@ -68,7 +68,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 
 ### `POST /:key/add?link=`  
 **Adds a new group link to the user**  
-- **key:** Key generated in the first endpoint described.
+- **:key** Key generated in the first endpoint described.
 - **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
 
 **Response:**  
@@ -80,7 +80,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 
 ### `DELETE /:key/remove?link=`  
 **Removes group link from user**  
-- **key:** Key generated in the first endpoint described.  
+- **:key** Key generated in the first endpoint described.  
 - **link:** String. Ending of the WhatsApp link. For the link: https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB, you should pass: E7XVpkrLPBrRr9krLPB  
 
 **Response:**  
@@ -92,7 +92,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 
 ### `DELETE /:key/removeall`  
 **Removes all group links from user**  
-- **key:** Key generated in the first endpoint described.   
+- **:key** Key generated in the first endpoint described.   
 
 **Response:**  
 ```js
@@ -109,7 +109,7 @@ You can access this API in the following url: https://whatsapp.deta.dev. Here ar
 1. Include groups links making a POST request to https://whatsapp.deta.dev/{your-key}/add and add the URL in the request's body as the code below or add the ending of the WhatsApp link (in this example: E7XVpkrLPBrRr9krLPB) as a query parameter to the POST request, like `https://whatsapp.deta.dev/{your-key}/add?link=E7XVpkrLPBrRr9krLPB`:
 ```js
 {
-  link: "https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
+  "link": "https://chat.whatsapp.com/E7XVpkrLPBrRr9krLPB"
 }
 ```
 
